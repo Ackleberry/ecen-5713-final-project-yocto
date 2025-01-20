@@ -1,10 +1,11 @@
 #!/bin/bash
 
-set -e
-
 git submodule init
 git submodule sync
 git submodule update
+
+rm -f ./build/conf/local.conf
+rm -f ./build/conf/bblayers.conf
 
 source poky/oe-init-build-env
 
@@ -13,12 +14,11 @@ conflines=(
     "MACHINE = \"stm32mp13-disco\""
     "ACCEPT_EULA_stm32mp1 = \"1\""
     "PACKAGE_CLASSES = \"package_deb\""
-    "DL_DIR = \"../\""
-    "IMAGE_INSTALL_append  = \" packagegroup-core-buildessential\""
-    "IMAGE_INSTALL_append += \" nano\""
+    # "DL_DIR = \"${TOPDIR}/downloads\"" # permission issues
+#    "IMAGE_INSTALL:append = \" packagegroup-core-buildessential\""
+#    "IMAGE_INSTALL:append = \" nano\""
 )
 
-#DL_DIR ?= "${TOPDIR}/downloads"
 for CONFLINE in "${conflines[@]}"; do
     grep "${CONFLINE}" conf/local.conf > /dev/null
     local_conf_info=$?
@@ -35,7 +35,8 @@ done
 layers=(
     "../meta-openembedded/meta-oe"
     "../meta-openembedded/meta-python"
-    "../meta-st-stm32mp" 
+    "../meta-st-stm32mp"
+    "../meta-prolific"
 )
 
 for layer in "${layers[@]}"; do
@@ -50,4 +51,5 @@ for layer in "${layers[@]}"; do
     fi
 done
 
+set -e
 bitbake core-image-full-cmdline
