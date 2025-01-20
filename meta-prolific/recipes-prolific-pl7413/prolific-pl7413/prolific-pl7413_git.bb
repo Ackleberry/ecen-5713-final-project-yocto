@@ -15,7 +15,7 @@ SRCREV = "45aeb8130d8a5a46087fb574b6d991e66e4503e0"
 # in your assignments repo
 S = "${WORKDIR}/git"
 
-# TODO: Add the prolific_pl7413 application and any other files you need to install
+# TODO: Add the prolific-pl7413 application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
 FILES:${PN} += "${bindir}/prolific_pl7413"
 
@@ -36,9 +36,14 @@ do_compile () {
 	oe_runmake
 }
 
+do_install:prepend() {
+    bbplain "Contents of ${S}: $(ls ${S})"
+}
+
 do_install () {
 	# TODO: Install your binaries/scripts here.
 	# Be sure to install the target directory with install -d first
+	bbplain "Installing '${S}/prolific_pl7413' here: '${D}${bindir}'"
 	install -d ${D}${bindir}
 	install -m 0755 ${S}/prolific_pl7413 ${D}${bindir}/
 
