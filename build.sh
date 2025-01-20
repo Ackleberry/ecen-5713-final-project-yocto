@@ -14,6 +14,8 @@ conflines=(
     "ACCEPT_EULA_stm32mp1 = \"1\""
     "PACKAGE_CLASSES = \"package_deb\""
     "DL_DIR = \"../\""
+    "IMAGE_INSTALL_append  = \" packagegroup-core-buildessential\""
+    "IMAGE_INSTALL_append += \" nano\""
 )
 
 #DL_DIR ?= "${TOPDIR}/downloads"
