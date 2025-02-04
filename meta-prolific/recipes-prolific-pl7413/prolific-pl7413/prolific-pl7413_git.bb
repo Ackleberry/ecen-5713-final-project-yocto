@@ -7,26 +7,27 @@ SRC_URI = "git://git@github.com/Ackleberry/final-project-assignment-stm32mp1.git
 
 PV = "1.0+git${SRCPV}"
 # TODO: set to reference a specific commit hash in your assignment repo
-SRCREV = "45aeb8130d8a5a46087fb574b6d991e66e4503e0"
+SRCREV = "83fdea6851a2417b83f2a8b4b4bb928282635855"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
 # We reference the "server" directory here to build from the "server" directory
 # in your assignments repo
-S = "${WORKDIR}/git"
+S = "${WORKDIR}/git/server"
 
 # TODO: Add the prolific-pl7413 application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
-FILES:${PN} += "${bindir}/prolific_pl7413"
+FILES:${PN} += "${bindir}/pl7413_server"
+FILES:${PN} += "${bindir}/pl7413-server-start-stop"
 
 # TODO: customize these as necessary for any libraries you need for your application
 # (and remove comment)
 TARGET_LDFLAGS += "-pthread -lrt"
-TARGET_CC_ARCH += "${LDFLAGS}"
+TARGET_CC_ARCH += "-Wall -Wextra -g -I../pl7413_drv -DSERVER_SYSLOG ${LDFLAGS}"
 
-# inherit update-rc.d
-# INITSCRIPT_PACKAGES = "${PN}"
-# INITSCRIPT_NAME:${PN} = "prolific-pl7413-start-stop"
+inherit update-rc.d
+INITSCRIPT_PACKAGES = "${PN}"
+INITSCRIPT_NAME:${PN} = "pl7413-server-start-stop"
 
 do_configure () {
 	:
@@ -43,9 +44,12 @@ do_install:prepend() {
 do_install () {
 	# TODO: Install your binaries/scripts here.
 	# Be sure to install the target directory with install -d first
-	bbplain "Installing '${S}/prolific_pl7413' here: '${D}${bindir}'"
+	bbplain "Installing '${S}/pl7413_server' here: '${D}${bindir}'"
 	install -d ${D}${bindir}
-	install -m 0755 ${S}/prolific_pl7413 ${D}${bindir}/
+	install -m 0755 ${S}/pl7413_server ${D}${bindir}/
+
+	install -d ${D}${sysconfdir}/init.d
+	install -m 0755 ${S}/pl7413-server-start-stop ${D}${sysconfdir}/init.d/
 
 	# Yocto variables ${D} and ${S} are useful here, which you can read about at 
 	# https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-D

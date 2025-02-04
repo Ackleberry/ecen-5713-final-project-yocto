@@ -14,10 +14,7 @@ conflines=(
     "MACHINE = \"stm32mp13-disco\""
     "ACCEPT_EULA_stm32mp1 = \"1\""
     "PACKAGE_CLASSES = \"package_deb\""
-    "CORE_IMAGE_EXTRA_INSTALL:append = \" prolific-pl7413\""
-    # "DL_DIR = \"${TOPDIR}/downloads\"" # permission issues
-#    "IMAGE_INSTALL:append = \" packagegroup-core-buildessential\""
-#    "IMAGE_INSTALL:append = \" nano\""
+    "IMAGE_INSTALL:append = \" prolific-pl7413\""
 )
 
 for CONFLINE in "${conflines[@]}"; do
@@ -53,4 +50,4 @@ for layer in "${layers[@]}"; do
 done
 
 set -e
-bitbake core-image-full-cmdline
+bitbake core-image-weston
