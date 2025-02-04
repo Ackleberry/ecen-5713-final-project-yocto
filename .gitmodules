@@ -10,3 +10,7 @@
 	path = meta-openembedded
 	url = git@github.com:openembedded/meta-openembedded.git
 	branch = scarthgap
+[submodule "meta-st-openstlinux"]
+	path = meta-st-openstlinux
+	url = git@github.com:STMicroelectronics/meta-st-openstlinux.git
+	branch = scarthgap
