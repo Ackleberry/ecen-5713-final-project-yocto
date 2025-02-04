@@ -18,13 +18,13 @@ DEVICE_NAME=${DEVICE##*/}
 set -x
 
 # Generate the image for the SD card
-sudo ./build/tmp/deploy/images/stm32mp13-disco/scripts/create_sdcard_from_flashlayout.sh ./build/tmp/deploy/images/stm32mp13-disco/flashlayout_core-image-full-cmdline/extensible/FlashLayout_sdcard_stm32mp135f-dk-extensible.tsv
+sudo ./build/tmp/deploy/images/stm32mp13-disco/scripts/create_sdcard_from_flashlayout.sh ./build/tmp/deploy/images/stm32mp13-disco/flashlayout_core-image-weston/extensible/FlashLayout_sdcard_stm32mp135f-dk-extensible.tsv
 
 # Unmount all partitions associated with the SD card.
 sudo umount "$(lsblk --list | grep "$DEVICE_NAME" | grep part | gawk '{ print $7 }' | tr '\n' ' ')"
 
 # Place image on SD Card
-sudo dd if=./build/tmp/deploy/images/stm32mp13-disco/flashlayout_core-image-full-cmdline/extensible/../../FlashLayout_sdcard_stm32mp135f-dk-extensible.raw of=/dev/mmcblk0 bs=8M conv=fdatasync status=progress
+sudo dd if=./build/tmp/deploy/images/stm32mp13-disco/flashlayout_core-image-weston/extensible/../../FlashLayout_sdcard_stm32mp135f-dk-extensible.raw of=/dev/mmcblk0 bs=8M conv=fdatasync status=progress
 
 sudo sgdisk /dev/mmcblk0 -p
 sudo sgdisk /dev/mmcblk0 -v
