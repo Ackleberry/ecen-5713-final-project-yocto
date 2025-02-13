@@ -1,0 +1,1 @@
+IMAGE_INSTALL:append = " prolific-pl7413"

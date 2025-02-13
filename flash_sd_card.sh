@@ -1,6 +1,5 @@
 #!/bin/bash
 
-IMAGE_NAME="prolific-image"
 
 if [ -z "$1" ]; then
   echo "Usage: $0 </dev/sdcard_device>"
@@ -9,6 +8,7 @@ if [ -z "$1" ]; then
 fi
 
 DEVICE=$1
+IMAGE_NAME=${2:-"prolific-image"}
 
 if [[ $DEVICE != /dev/* ]]; then
   echo "Error: Device must start with /dev/"

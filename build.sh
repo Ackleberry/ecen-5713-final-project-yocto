@@ -1,5 +1,7 @@
 #!/bin/bash
 
+IMAGE_NAME=${1:-"prolific-image"}
+
 git submodule init
 git submodule sync
 git submodule update
@@ -7,7 +9,8 @@ git submodule update
 rm -f ./build/conf/local.conf
 rm -f ./build/conf/bblayers.conf
 
-source poky/oe-init-build-env
+# Best to give the directory as an arg otherwise it can grab $1 passed in!
+source poky/oe-init-build-env build
 
 # Modify poky/build/conf/local.conf
 conflines=(
@@ -49,4 +52,4 @@ for layer in "${layers[@]}"; do
 done
 
 set -e
-bitbake prolific-image
+bitbake ${IMAGE_NAME}
