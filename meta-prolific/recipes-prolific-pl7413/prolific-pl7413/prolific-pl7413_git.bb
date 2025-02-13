@@ -3,11 +3,11 @@ LICENSE = "CLOSED"
 
 # TODO: Set this  with the path to your assignments rep.  Use ssh protocol and see lecture notes
 # about how to setup ssh-agent for passwordless access
-SRC_URI = "git://git@github.com/Ackleberry/final-project-assignment-stm32mp1.git;protocol=ssh;branch=main"
+SRC_URI = "git://git@github.com/Ackleberry/ecen-5713-final-project-app.git;protocol=ssh;branch=main"
 
 PV = "1.0+git${SRCPV}"
 # TODO: set to reference a specific commit hash in your assignment repo
-SRCREV = "83fdea6851a2417b83f2a8b4b4bb928282635855"
+SRCREV = "aeea4476bbb67e3b82d604df11612b7af0f2b8d8"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR

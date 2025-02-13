@@ -14,7 +14,6 @@ conflines=(
     "MACHINE = \"stm32mp13-disco\""
     "ACCEPT_EULA_stm32mp1 = \"1\""
     "PACKAGE_CLASSES = \"package_deb\""
-    "IMAGE_INSTALL:append = \" prolific-pl7413\""
 )
 
 for CONFLINE in "${conflines[@]}"; do
@@ -50,4 +49,4 @@ for layer in "${layers[@]}"; do
 done
 
 set -e
-bitbake core-image-weston
+bitbake prolific-image
